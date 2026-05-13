@@ -4,7 +4,8 @@ using Dates
 using ScientificTypes
 
 include("preprocessing_helpers.jl")
-include("dictionaries/flagi_lokacje.jl")
+include("dictionaries/binary_flags.jl")
+include("dictionaries/locations.jl")
 
 # input
 df_ze = loader("dane pierwotne/zapotrzebowanie energetyczne.csv")
@@ -52,20 +53,14 @@ rename!(df_pp, "tmin" => "min_temp")
 #zmiana kolejności
 
 
-#!SECTION - TODO 
-# HUSTON - COAST
-# DALLAS - NORTH
-# AUSTIN - SCENT
-# SAN ANTONIO - SCENT
-# ew. ercot jako dodatkowa miara, lub w ogóle zmienna opisywana
+kolejnosc =  [:date, :location, :precipitation, :t_precipitation, :wind_speed, :t_wind_speed, :snowfall, :t_snowfall, :max_temp, :min_temp]
+df_ze.date = Date.(df_ze.datetime)
+relewantne_ze = [:date, :coast, :north, :scent, :ercot]
 
+select!(df_pp, kolejnosc)
+select!(df_ze, relewantne_ze)
 
-
-
-
-
-select!(df_pp, [:date, :location, :precipitation, :t_precipitation, :wind_speed, :t_wind_speed, :snowfall, :t_snowfall, :max_temp, :min_temp])
 
 # zapis
-# CSV.write("dane przetworzone/pomiary pogodowe.csv", df_pp)
-# CSV.write("dane przetworzone/zapotrzebowanie energetyczne.csv", df_ze)
+CSV.write("dane przetworzone/pomiary pogodowe.csv", df_pp)
+CSV.write("dane przetworzone/zapotrzebowanie energetyczne.csv", df_ze)

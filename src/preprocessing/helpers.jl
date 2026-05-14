@@ -1,7 +1,23 @@
+
 function loader(path::AbstractString)
     df = CSV.read(path, DataFrame)
 
     return df
+end
+
+function parse_ercot_date(x)
+
+    # rekordy z czasem "24:00" były brane jako następny dzień, 
+    # a powinny były jako ostatnia obserwacja z danego dnia
+    # przez co pierwsza grupa miała 23 rekordy, a ostatnia 1 
+    
+    s = strip(String(x))
+
+    if endswith(s, "24:00")
+        return Date(first(s, 10), dateformat"mm/dd/yyyy")
+    else
+        return Date(DateTime(s, dateformat"mm/dd/yyyy HH:MM"))
+    end
 end
 
 function parse_numbers(num)

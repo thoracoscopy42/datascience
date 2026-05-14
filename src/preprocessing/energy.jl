@@ -14,8 +14,8 @@ rename!(df, "hour ending" => "date")
 relevant_cols = [:date, :coast, :north, :scent, :ercot]
 select!(df, relevant_cols)
 
-df.date = DateTime.(df.date, dateformat"mm/dd/yyyy HH:MM")
-df.date = Date.(df.date)
+
+df.date = parse_ercot_date.(df.date)
 
 columns = [:coast, :north, :scent, :ercot]
 

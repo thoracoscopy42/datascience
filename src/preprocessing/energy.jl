@@ -31,9 +31,9 @@ end
 # ercot jako dodatkowa miara - zmienna opisywana dla drugiego zestawu modeli
 
 
-agregated_df = agregate_distribute(df)
+df = agregate_distribute(df)
 
-
+df
 
 
 

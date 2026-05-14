@@ -13,16 +13,7 @@ function parse_numbers(num)
     return parse(Float64, x)
 end
 
-
-#!TODO - dla każdego podregionu osobno i dla ercot zagregowane 
-# mean
-# sum
-# max
-# min
-# std
-# range
-# load_factor
-# peak_ratio
+#funkcje do agregate poniżej
 
 function data_range(x)
     return maximum(x) - minimum(x)
@@ -37,8 +28,11 @@ function peak_ratio(x)
 end
 
 function agregate_distribute(df::DataFrame; by_col=:date)
+
         agregated_df = combine(
+
             groupby(df, by_col),
+
             #SECTION - coast
             :coast => mean        => :coast_mean,
             :coast => sum         => :coast_daily,
@@ -81,5 +75,38 @@ function agregate_distribute(df::DataFrame; by_col=:date)
             :ercot => peak_ratio  => :ercot_peak_ratio
             )
 
-    return agregated_df
+        coast_tab = select(
+            agregated_df,
+            by_col,
+            r"coast_"
+        )
+
+        north_tab = select(
+            agregated_df,
+            by_col,
+            r"north_"
+        )
+
+        scent_tab = select(
+            agregated_df,
+            by_col,
+            r"scent_"
+        )
+
+        ercot_tab = select(
+            agregated_df,
+            by_col,
+            r"ercot_"
+        )
+
+        # CSV.write("data/partial/coast.csv", coast_tab)
+        # CSV.write("data/partial/north.csv", north_tab)
+        # CSV.write("data/partial/scent.csv", scent_tab)
+        # CSV.write("data/partial/ercot.csv", ercot_tab)
+        
+        # CSV.write("data/processed/energy.csv", agregated_df)
+
+
+    return agregated_df 
 end
+

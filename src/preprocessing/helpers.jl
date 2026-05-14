@@ -115,10 +115,10 @@ function agregate_distribute(df::DataFrame; by_col=:date)
             r"ercot_"
         )
 
-        # CSV.write("data/partial/coast.csv", coast_tab)
-        # CSV.write("data/partial/north.csv", north_tab)
-        # CSV.write("data/partial/scent.csv", scent_tab)
-        # CSV.write("data/partial/ercot.csv", ercot_tab)
+        # CSV.write("data/partial/energy/coast.csv", coast_tab)
+        # CSV.write("data/partial/energy/north.csv", north_tab)
+        # CSV.write("data/partial/energy/scent.csv", scent_tab)
+        # CSV.write("data/partial/energy/ercot.csv", ercot_tab)
         
         # CSV.write("data/processed/energy.csv", agregated_df)
 

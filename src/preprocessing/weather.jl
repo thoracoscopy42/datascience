@@ -64,5 +64,19 @@ column_order = [ :date, :location, :precipitation, :t_precipitation, :wind_speed
 select!(df, column_order)
 
 
+# shiftalt\/ - kopiowanie linijek w dół/góre
+#jak argumenty sa przekazywane 
+function agregate_region(df, group_col = :location) #df przed srednikiem, a po są opcjonalne
+    x = groupby(df, group_col)
+    # x[4] # do każdej lokalizacji (macierze utworzone po nazwie lokalizacji) - odnoszenie sie do nich/ wywoływanie 
+    CSV.write("data/partial/weather/austin.csv", x[1])
+    CSV.write("data/partial/weather/san_antonio.csv", x[2])
+    CSV.write("data/partial/weather/dallas.csv", x[3])
+    CSV.write("data/partial/weather/houston.csv", x[4])
+
+end
+agregate_region(df) #po średniku zbieranina zmiennych - czyli trzeb po konkretnej nazwie 
+
+
 
 # CSV.write("data/processed/weather.csv", df)

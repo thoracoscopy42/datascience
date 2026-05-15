@@ -126,3 +126,11 @@ function agregate_distribute(df::DataFrame; by_col=:date)
     return agregated_df 
 end
 
+function agregate_region(df, group_col = :location) 
+    x = groupby(df, group_col) 
+    # CSV.write("data/partial/weather/austin.csv", x[1])
+    # CSV.write("data/partial/weather/san_antonio.csv", x[2])
+    # CSV.write("data/partial/weather/dallas.csv", x[3])
+    # CSV.write("data/partial/weather/houston.csv", x[4])
+
+end

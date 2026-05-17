@@ -2,7 +2,7 @@ using DataFrames
 using Dates
 using ScientificTypes
 
-function add_calendar_features(df::DataFrame)
+function add_calendar_features!(df::DataFrame)
 
     df.month = Float64.(month.(df.date))
     df.dayofweek = Float64.(dayofweek.(df.date))
@@ -11,7 +11,7 @@ function add_calendar_features(df::DataFrame)
     return df
 end
 
-function prepare_model_frame(
+function prepare_model_frame!(
     df::DataFrame;
     target::Symbol,
     features::Vector{Symbol}

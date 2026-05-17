@@ -25,16 +25,45 @@ df.date = Date.(df.date)
 
 # fig
 
-fig = Figure(size = (700, 700))
+# fig = Figure(size = (700, 700))
 
-ax = Axis(
-    fig[1,1], 
-    title = "Zależność maksymalnej temperatury od wiatru",
-    xlabel = "Temperatura maksymalna",
-    ylabel = "Prędkość wiatru",
+# ax = Axis(
+#     fig[1,1], 
+#     title = "Zależność maksymalnej temperatury od wiatru",
+#     xlabel = "Temperatura maksymalna",
+#     ylabel = "Prędkość wiatru",
+# )
+# density!(ax, df.snowfall)
+
+# save("Wykres temperatury do prędkości wiatru.svg", fig)
+
+# fig
+
+fig = Figure(size = (2400, 1200))
+
+ax1 = Axis(
+    fig[1, 1],
+    title = "Temperatura w czasie",
+    xlabel = "Data",
+    ylabel = "Temperatura"
 )
-density!(ax, df.snowfall)
 
-save("Wykres temperatury do prędkości wiatru.svg", fig)
+ax2 = Axis(
+    fig[1, 2],
+    title = "Temperatura vs wiatr",
+    xlabel = "Temperatura maksymalna",
+    ylabel = "Prędkość wiatru"
+)
+
+lines!(ax1, df.date, df.max_temp, label = "MAX")
+lines!(ax1, df.date, df.min_temp, label = "MIN")
+axislegend(ax1)
+
+scatter!(ax2, df.max_temp, df.wind_speed)
+
+colgap!(fig.layout, 170)
+# rowgap!(fig.layout, 170)
+
+save("dwa_wykresy.svg", fig)
 
 fig

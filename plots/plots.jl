@@ -5,7 +5,8 @@ using ScientificTypes
 using Statistics
 using CairoMakie
 
-df = CSV.read("../data/partial/weather/austin.csv", DataFrame)
+df  = CSV.read("../data/partial/weather/austin.csv", DataFrame)
+df1 = CSV.read("../data/partial/energy/austin.csv", DataFrame)
 
 df.date = Date.(df.date)
 

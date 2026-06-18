@@ -212,7 +212,7 @@ Warto również zauważyć, że Austin i San Antonio korzystają z tej samej zmi
 
 ## Ograniczenia projektu
 
-Projekt ma charakter akademicki i eksploracyjny. Najważniejsze ograniczenia obejmują:
+Najważniejsze ograniczenia obejmują:
 
 - wykorzystanie danych zagregowanych do poziomu dziennego,
 - ograniczony zakres strojenia hiperparametrów,

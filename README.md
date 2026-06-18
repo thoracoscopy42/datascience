@@ -1,3 +1,31 @@
+# DataScience
+
+## Modele regresyjne zapotrzebowania energetycznego na podstawie danych pogodowych
+
+Projekt przedstawia analizę zależności między warunkami pogodowymi a dziennym zapotrzebowaniem na energię elektryczną w wybranych lokalizacjach w Teksasie: Austin, Dallas, Houston oraz San Antonio.
+
+Celem projektu było przygotowanie danych pogodowych i energetycznych, połączenie ich w spójny zbiór modelowy oraz porównanie kilku modeli regresyjnych służących do predykcji dziennego zapotrzebowania energetycznego.
+
+---
+
+## Cel projektu
+
+Głównym celem projektu było sprawdzenie, czy podstawowe zmienne pogodowe mogą zostać wykorzystane do przewidywania dziennego zapotrzebowania energetycznego.
+
+W projekcie wykonano:
+
+- preprocessing danych pogodowych,
+- preprocessing danych energetycznych,
+- agregację danych do poziomu dziennego,
+- podział danych według lokalizacji,
+- połączenie danych pogodowych i energetycznych po dacie,
+- trenowanie kilku modeli regresyjnych,
+- porównanie modeli za pomocą metryk MAE, RMSE oraz R²,
+- wizualizację wyników,
+- analizę predykcji rzeczywistych i przewidywanych wartości.
+
+---
+
 ## Dane
 
 W projekcie wykorzystano dwa zbiory danych:
@@ -100,28 +128,73 @@ Najlepsze wyniki uzyskały modele liniowe: `LinearRegression` oraz `RidgeRegress
 
 ## Wizualizacja wyników
 
-W repozytorium znajdują się wykresy porównujące jakość modeli dla poszczególnych lokalizacji. Obejmują one między innymi porównanie metryk `MAE`, `RMSE` oraz `R²`.
+Wyniki modelowania zostały przedstawione również w formie wykresów. Dla każdej lokalizacji przygotowano osobne porównanie modeli obejmujące metryki `MAE`, `RMSE` oraz `R²`.
 
-Wyniki dla poszczególnych lokalizacji:
+Dodatkowo wygenerowano wykresy typu actual vs predicted, które pokazują relację między wartościami rzeczywistymi a wartościami przewidywanymi przez najlepszy model dla danej lokalizacji.
 
-- Austin: `plots/generated/austin_model_comparison.png`
-- Dallas: `plots/generated/dallas_model_comparison.png`
-- Houston: `plots/generated/houston_model_comparison.png`
-- San Antonio: `plots/generated/san_antonio_model_comparison.png`
+---
 
-Dodatkowo przygotowano wykres zbiorczy najlepszych modeli:
+### Porównanie najlepszych modeli
 
-- `plots/generated/best_models_summary.png`
+Poniższy wykres przedstawia najlepszy model dla każdej lokalizacji według metryki `RMSE`.
 
-W projekcie przygotowano również wykresy typu actual vs predicted, które pokazują relację między rzeczywistymi a przewidywanymi wartościami zapotrzebowania energetycznego na zbiorze testowym.
+![Best models summary](plots/generated/best_models_summary.png)
 
-Wykresy actual vs predicted:
+---
 
-- Austin: `plots/generated/actual_vs_predicted/austin_actual_vs_predicted.png`
-- Dallas: `plots/generated/actual_vs_predicted/dallas_actual_vs_predicted.png`
-- Houston: `plots/generated/actual_vs_predicted/houston_actual_vs_predicted.png`
-- San Antonio: `plots/generated/actual_vs_predicted/san_antonio_actual_vs_predicted.png`
-- Porównanie zbiorcze: `plots/generated/actual_vs_predicted/all_regions_actual_vs_predicted.png`
+### Austin
+
+Dla Austin najlepszy wynik uzyskał model `RidgeRegression`, osiągając `RMSE = 439.77`, `MAE = 48.16` oraz `R² = 0.999862`.
+
+![Austin model comparison](plots/generated/austin_model_comparison.png)
+
+Wykres actual vs predicted pokazuje dopasowanie najlepszego modelu do danych testowych.
+
+![Austin actual vs predicted](plots/generated/actual_vs_predicted/austin_actual_vs_predicted.png)
+
+---
+
+### Dallas
+
+Dla Dallas najlepszy wynik uzyskał model `RidgeRegression`, osiągając `RMSE = 68.70`, `MAE = 7.64` oraz `R² = 0.999854`.
+
+![Dallas model comparison](plots/generated/dallas_model_comparison.png)
+
+Wykres actual vs predicted pokazuje, że przewidywane wartości są bardzo zbliżone do wartości rzeczywistych.
+
+![Dallas actual vs predicted](plots/generated/actual_vs_predicted/dallas_actual_vs_predicted.png)
+
+---
+
+### Houston
+
+Dla Houston najlepszy wynik uzyskał model `LinearRegression`, osiągając `RMSE = 799.05`, `MAE = 130.27` oraz `R² = 0.999792`.
+
+![Houston model comparison](plots/generated/houston_model_comparison.png)
+
+Wykres actual vs predicted przedstawia dopasowanie modelu liniowego do danych testowych.
+
+![Houston actual vs predicted](plots/generated/actual_vs_predicted/houston_actual_vs_predicted.png)
+
+---
+
+### San Antonio
+
+Dla San Antonio najlepszy wynik uzyskał model `LinearRegression`, osiągając `RMSE = 439.41`, `MAE = 59.26` oraz `R² = 0.999863`.
+
+![San Antonio model comparison](plots/generated/san_antonio_model_comparison.png)
+
+Wykres actual vs predicted potwierdza bardzo dobre dopasowanie najlepszego modelu do wartości rzeczywistych.
+
+![San Antonio actual vs predicted](plots/generated/actual_vs_predicted/san_antonio_actual_vs_predicted.png)
+
+---
+
+### Zbiorcze porównanie actual vs predicted
+
+Poniższy wykres przedstawia zbiorcze porównanie wartości rzeczywistych i przewidywanych dla najlepszych modeli we wszystkich analizowanych lokalizacjach.
+
+![All regions actual vs predicted](plots/generated/actual_vs_predicted/all_regions_actual_vs_predicted.png)
 
 ---
 
@@ -161,3 +234,73 @@ Najważniejsze wnioski z projektu:
 6. Wykresy actual vs predicted potwierdzają, że najlepsze modele generowały predykcje bardzo bliskie wartościom rzeczywistym.
 
 ---
+
+## Jak uruchomić projekt
+
+Aktywacja środowiska:
+
+```julia
+using Pkg
+Pkg.activate(".")
+Pkg.instantiate()
+```
+
+Uruchomienie modelowania:
+
+```julia
+include("src\\processing\\processing.jl")
+```
+
+Wygenerowanie wykresów porównania modeli:
+
+```julia
+include("plots\\model_results.jl")
+```
+
+Wygenerowanie wykresów actual vs predicted:
+
+```julia
+include("plots\\actual_vs_predicted.jl")
+```
+
+---
+
+## Wyniki generowane przez projekt
+
+Po uruchomieniu modelowania generowane są m.in. następujące pliki:
+
+```text
+data/processed/modeling/model_comparison.csv
+data/processed/modeling/best_models.csv
+data/processed/modeling/predictions/all_predictions.csv
+data/processed/modeling/predictions/best_predictions_all.csv
+```
+
+Po uruchomieniu skryptów wizualizacyjnych generowane są m.in.:
+
+```text
+plots/generated/austin_model_comparison.png
+plots/generated/dallas_model_comparison.png
+plots/generated/houston_model_comparison.png
+plots/generated/san_antonio_model_comparison.png
+plots/generated/best_models_summary.png
+plots/generated/actual_vs_predicted/austin_actual_vs_predicted.png
+plots/generated/actual_vs_predicted/dallas_actual_vs_predicted.png
+plots/generated/actual_vs_predicted/houston_actual_vs_predicted.png
+plots/generated/actual_vs_predicted/san_antonio_actual_vs_predicted.png
+plots/generated/actual_vs_predicted/all_regions_actual_vs_predicted.png
+```
+
+---
+
+## Technologie
+
+Projekt został wykonany w języku Julia z wykorzystaniem następujących pakietów:
+
+- `CSV.jl`
+- `DataFrames.jl`
+- `MLJ.jl`
+- `MLJLinearModels.jl`
+- `DecisionTree.jl`
+- `CairoMakie.jl`
+- `StableRNGs.jl`
